@@ -1,0 +1,89 @@
+using System.Security.Claims;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using acb_app.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using System;
+
+namespace acb_app.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AccountController : ControllerBase
+    {
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly IConfiguration _config;
+        public AccountController(UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager, IConfiguration config)
+        {
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            _config = config;
+        }
+        [HttpPost,Route("Register")]
+        public async Task<IActionResult> Register(RegisterAccount account)
+        {
+            var user = new IdentityUser { UserName = account.Username, Email = account.Email };
+            var result =  await userManager.CreateAsync(user, account.Password);
+            if (result.Succeeded)
+            {
+              await  signInManager.SignInAsync(user, isPersistent: false);
+            }
+            return Ok(result);
+        }
+         [HttpGet]
+        public ActionResult<IEnumerable<string>> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        [HttpPost, Route("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(Login entity)
+        {
+
+            var result = await signInManager.PasswordSignInAsync(entity.Username, entity.Password,entity.RememberMe, false);
+
+            if (result.Succeeded)
+            {
+                //generate token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var xx =_config.GetSection("AppSettings:Token").Value;
+                Console.WriteLine("key ", xx);
+                var key = Encoding.ASCII.GetBytes("dungudngudngdgdgsfds fdsf ");
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]{
+                    new Claim(ClaimTypes.NameIdentifier,entity.Username),
+                    new Claim(ClaimTypes.Name, entity.Password)
+                }),
+                    Expires = DateTime.Now.AddDays(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+                return Ok(new
+                {
+                    token = tokenString,
+                    expiration = token.ValidTo
+                }) ;
+            }
+            return Unauthorized();
+        }
+
+        [HttpPost, Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return Ok("Logout");
+        }
+
+    }
+}

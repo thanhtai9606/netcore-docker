@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace acb_app
 {
@@ -18,26 +19,33 @@ namespace acb_app
     {
         public Startup(IConfiguration configuration)
         {
-             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.Json")
-                .AddJsonFile("appsettings.Development.Json", true)
-                .AddEnvironmentVariables();
+            var builder = new ConfigurationBuilder()
+               .AddJsonFile("appsettings.Json")
+               .AddJsonFile("appsettings.Development.Json", true)
+               .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-           // Configuration = configuration;
+            // Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
+            var identitySettingSection = Configuration.GetSection("AppIdentitySettings");
             services.AddDbContext<ACBSystemContext>(options => options.UseMySql(Configuration["ConnectionStrings:MySqlConnection"]));
+            services.AddDbContext<AuthDbContext>(options => options.UseMySql(Configuration["ConnectionStrings:MySqlAuthConnection"]));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                    .AddDefaultTokenProviders()
+                    .AddEntityFrameworkStores<AuthDbContext>();
             services.AddScoped<IDataContextAsync, ACBSystemContext>();
+
+            services.Configure<AppIdentitySettings>(identitySettingSection);
             services.AddScoped<IUnitOfWorkAsync, UnitOfWork>();
             services.AddScoped<IRepositoryAsync<Phone>, Repository<Phone>>();
             services.AddScoped<IPhoneService, PhoneService>();
-            
+
             services.AddControllers();
         }
 
@@ -52,7 +60,7 @@ namespace acb_app
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

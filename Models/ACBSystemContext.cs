@@ -53,6 +53,7 @@ namespace acb_app.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Address>(entity =>
             {
                 entity.Property(e => e.AddressId)
@@ -247,11 +248,11 @@ namespace acb_app.Models
 
                 entity.Property(e => e.HireDate).HasColumnType("datetime");
 
-                entity.Property(e => e.JobTitle).HasColumnType("int(11)");
+                entity.Property(e => e.JobTitle).HasColumnType("text");
 
                 entity.Property(e => e.LoginId)
                     .HasColumnName("LoginID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.MaritalStatus)
                     .IsRequired()
@@ -266,9 +267,9 @@ namespace acb_app.Models
 
                 entity.Property(e => e.NationalIdnumber)
                     .HasColumnName("NationalIDNumber")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("varchar(20)");
 
-                entity.Property(e => e.Position).HasColumnType("int(11)");
+                entity.Property(e => e.Position).HasColumnType("text");
 
                 entity.Property(e => e.SickLeaveHours).HasColumnType("tinyint(4)");
 

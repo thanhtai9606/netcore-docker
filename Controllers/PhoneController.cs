@@ -9,6 +9,7 @@ namespace acb_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+  //  [Authorize]
     public class PhoneController : ControllerBase
     {
         private readonly IPhoneService _PhoneService;

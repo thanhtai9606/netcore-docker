@@ -19,3 +19,6 @@ We have to install Remote Development in vscode first (very important)!!!
 
 dotnet ef migration export
 export PATH="$PATH:$HOME/.dotnet/tools/"
+
+1. dotnet ef migrations add InitialIdentity --context AuthDbContext
+2. dotnet ef database update -context AuthDbContext
