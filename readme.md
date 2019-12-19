@@ -16,3 +16,6 @@ options 2
 Can web use extionsion for vsCode C#... too
 
 We have to install Remote Development in vscode first (very important)!!!
+
+dotnet ef migration export
+export PATH="$PATH:$HOME/.dotnet/tools/"

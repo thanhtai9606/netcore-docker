@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace acb_app.Models
+{
+    public partial class Person
+    {
+        public int BusinessEntityId { get; set; }
+        public string PersonType { get; set; }
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime ModifiedDate { get; set; }
+    }
+}
