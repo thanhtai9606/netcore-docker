@@ -20,7 +20,7 @@ namespace acb_app
           .UseContentRoot(Directory.GetCurrentDirectory())
           .UseIISIntegration()
           .UseStartup<Startup>()
-          .UseUrls("http://*:4141") // <-----
+          .UseUrls("http://*:4123") // <-----
           .Build();
 
             host.Run();
