@@ -14,3 +14,5 @@ options 2
 		},      
 3. Debug is nomarly
 Can web use extionsion for vsCode C#... too
+
+We have to install Remote Development in vscode first (very important)!!!
