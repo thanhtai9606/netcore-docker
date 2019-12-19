@@ -9,24 +9,24 @@ namespace acb_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class PhoneController : ControllerBase
     {
-        private readonly IStudentService _studentService;
+        private readonly IPhoneService _PhoneService;
         private readonly IUnitOfWorkAsync _unitOfWork;
         private OperationResult operationResult = new OperationResult();
-        public StudentController(IStudentService studentService, IUnitOfWorkAsync unitOfWork)
+        public PhoneController(IPhoneService PhoneService, IUnitOfWorkAsync unitOfWork)
         {
-            _studentService = studentService;
+            _PhoneService = PhoneService;
             _unitOfWork = unitOfWork;
           
         }
         [AllowAnonymous]
-        [HttpPost, Route("AddStudent")]
-        public IActionResult AddStudent(Student student)
+        [HttpPost, Route("AddPhone")]
+        public IActionResult AddPhone(Phone Phone)
         {
             try
             {
-                _studentService.Add(student);
+                _PhoneService.Add(Phone);
                 int res = _unitOfWork.SaveChanges();
                 if (res > 0)
                 {
@@ -45,12 +45,12 @@ namespace acb_app.Controllers
             return Ok(operationResult);
         }
         [AllowAnonymous]
-        [HttpPost, Route("UpdateStudent")]
-        public IActionResult UpdateStudent(Student student)
+        [HttpPost, Route("UpdatePhone")]
+        public IActionResult UpdatePhone(Phone Phone)
         {
             try
             {
-                _studentService.Update(student);
+                _PhoneService.Update(Phone);
                 int res = _unitOfWork.SaveChanges();
                 if (res > 0)
                 {
@@ -69,12 +69,12 @@ namespace acb_app.Controllers
             return Ok(operationResult);
         }
         
-        [HttpDelete, Route("DeleteStudent")]
-        public IActionResult DeleteStudent(int id)
+        [HttpDelete, Route("DeletePhone")]
+        public IActionResult DeletePhone(int id)
         {
             try
             {
-                _studentService.Delete(id);
+                _PhoneService.Delete(id);
                 int res = _unitOfWork.SaveChanges();
                 if (res > 0)
                 {
@@ -92,10 +92,10 @@ namespace acb_app.Controllers
             }
             return Ok(operationResult);
         }
-        [HttpGet, Route("GetStudent")]
-        public IActionResult GetStudent()
+        [HttpGet, Route("GetPhone")]
+        public IActionResult GetPhone()
         {
-            return Ok(_studentService.Queryable());
+            return Ok(_PhoneService.Queryable());
         }
 
 

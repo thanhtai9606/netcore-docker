@@ -5,9 +5,9 @@ using BecamexIDC.Pattern.Services;
 
 namespace acb_app.Repositories.Services
 {
-    public class StudentService : Service<Student>, IStudentService
+    public class PhoneService : Service<Phone>, IPhoneService
     {
-        public StudentService(IRepositoryAsync<Student> repository) : base(repository)
+        public PhoneService(IRepositoryAsync<Phone> repository) : base(repository)
         {
         }
     }

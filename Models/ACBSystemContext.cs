@@ -1,14 +1,12 @@
 ﻿using System;
+using BecamexIDC.Pattern.EF.Factory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace acb_app.Models
 {
-    public partial class ACBSystemContext : DbContext
+    public partial class ACBSystemContext : DataContext
     {
-        public ACBSystemContext()
-        {
-        }
 
         public ACBSystemContext(DbContextOptions<ACBSystemContext> options)
             : base(options)
@@ -48,7 +46,7 @@ namespace acb_app.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("server=172.17.0.5;database=ACB-System;user=root;pwd=123");
             }
         }

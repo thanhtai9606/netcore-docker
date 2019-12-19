@@ -32,11 +32,11 @@ namespace acb_app
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {            
-            services.AddDbContext<UniversityContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddScoped<IDataContextAsync, UniversityContext>();
+            services.AddDbContext<ACBSystemContext>(options => options.UseMySql(Configuration["ConnectionStrings:MySqlConnection"]));
+            services.AddScoped<IDataContextAsync, ACBSystemContext>();
             services.AddScoped<IUnitOfWorkAsync, UnitOfWork>();
-            services.AddScoped<IRepositoryAsync<Student>, Repository<Student>>();
-            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IRepositoryAsync<Phone>, Repository<Phone>>();
+            services.AddScoped<IPhoneService, PhoneService>();
             
             services.AddControllers();
         }
