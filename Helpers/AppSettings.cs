@@ -1,4 +1,4 @@
-namespace acb_app.Models
+namespace acb_app.Helpers
 {
     public class AppSettings
     {

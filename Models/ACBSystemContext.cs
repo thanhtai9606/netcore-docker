@@ -1,15 +1,13 @@
 ﻿using System;
+using BecamexIDC.Pattern.EF.Factory;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace acb_app.Models
 {
-    public partial class ACBSystemContext : DbContext
+    public partial class ACBSystemContext : DataContext
     {
-        public ACBSystemContext()
-        {
-        }
-
+     
         public ACBSystemContext(DbContextOptions<ACBSystemContext> options)
             : base(options)
         {
@@ -861,11 +859,11 @@ namespace acb_app.Models
 
                 entity.Property(e => e.TotalDue).HasColumnType("decimal(10,0)");
 
-                entity.HasOne(d => d.SalesOrder)
-                    .WithOne(p => p.SaleOrderHeader)
-                    .HasForeignKey<SaleOrderHeader>(d => d.SalesOrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("SaleOrderHeader_ibfk_1");
+                // entity.HasOne(d => d.SalesOrder)
+                //     .WithOne(p => p.SaleOrderHeader)
+                //     .HasForeignKey<SaleOrderHeader>(d => d.SalesOrderId)
+                //     .OnDelete(DeleteBehavior.ClientSetNull)
+                //     .HasConstraintName("SaleOrderHeader_ibfk_1");
             });
 
             modelBuilder.Entity<SalesOrderDetail>(entity =>

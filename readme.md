@@ -22,3 +22,6 @@ export PATH="$PATH:$HOME/.dotnet/tools/"
 
 1. dotnet ef migrations add InitialIdentity --context AuthDbContext
 2. dotnet ef database update -context AuthDbContext
+
+create class with scaffod 
+=> dotnet ef dbcontext scaffold "Server=172.17.0.5;Database=ACB-System;user=root;pwd=123;" "Pomelo.EntityFrameworkCore.MySql" -o Models -f
