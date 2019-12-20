@@ -19,6 +19,7 @@ namespace acb_app.Models
         public bool RequireUppercase { get; set; }
         public bool RequireDigit { get; set; }
         public bool RequireNonAlphanumeric { get; set; }
+        public int RequiredUniqueChars { get; set; }
     }
 
     public class LockoutSettings

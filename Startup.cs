@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace acb_app
 {
@@ -51,8 +52,29 @@ namespace acb_app
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
+            var passwordSettings = appSettingsSection.Get<PasswordSettings>();
+            var lockoutSettings = appSettingsSection.Get<LockoutSettings>();
+            var userSettings = appSettingsSection.Get<UserSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Token);
 
+            services.Configure<IdentityOptions>(options =>
+                        {
+                            // Password settings
+                            options.Password.RequireDigit = passwordSettings.RequireDigit;
+                            options.Password.RequiredLength = passwordSettings.RequiredLength;
+                            options.Password.RequireNonAlphanumeric = passwordSettings.RequireNonAlphanumeric;
+                            options.Password.RequireUppercase = passwordSettings.RequireUppercase;
+                            options.Password.RequireLowercase = passwordSettings.RequireLowercase;
+                            options.Password.RequiredUniqueChars = passwordSettings.RequiredUniqueChars;
+
+                            // Lockout settings
+                            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(lockoutSettings.DefaultLockoutTimeSpanInMins);
+                            options.Lockout.MaxFailedAccessAttempts = lockoutSettings.MaxFailedAccessAttempts;
+                            options.Lockout.AllowedForNewUsers = lockoutSettings.AllowedForNewUsers;
+
+                            // User settings
+                            options.User.RequireUniqueEmail = userSettings.RequireUniqueEmail;
+                        });
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -84,6 +106,7 @@ namespace acb_app
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
