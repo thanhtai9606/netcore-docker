@@ -10,12 +10,12 @@ namespace acb_app.Controllers
     [Route("api/[controller]")]
     [ApiController]
    // [Authorize(AuthenticationSchemes = "Bearer")] // waring have to use this
-    public class EmployeeManagementController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
         private readonly IUnitOfWorkAsync _unitOfWork;
         private OperationResult operationResult = new OperationResult();
-        public EmployeeManagementController(IEmployeeService employeeService, IUnitOfWorkAsync unitOfWork)
+        public EmployeeController(IEmployeeService employeeService, IUnitOfWorkAsync unitOfWork)
         {
             _employeeService = employeeService;
             _unitOfWork = unitOfWork;
