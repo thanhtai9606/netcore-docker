@@ -31,7 +31,7 @@ namespace acb_app.Models
         public virtual DbSet<ProductListPriceHistory> ProductListPriceHistory { get; set; }
         public virtual DbSet<ProductPhoto> ProductPhoto { get; set; }
         public virtual DbSet<ProductProductPhoto> ProductProductPhoto { get; set; }
-        public virtual DbSet<ProductSubCatetory> ProductSubCatetory { get; set; }
+        public virtual DbSet<ProductSubCategory> ProductSubCategory { get; set; }
         public virtual DbSet<Province> Province { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetail { get; set; }
         public virtual DbSet<PurchaseOrderHeader> PurchaseOrderHeader { get; set; }
@@ -635,7 +635,7 @@ namespace acb_app.Models
                     .HasConstraintName("ProductProductPhoto_ibfk_1");
             });
 
-            modelBuilder.Entity<ProductSubCatetory>(entity =>
+            modelBuilder.Entity<ProductSubCategory>(entity =>
             {
                 entity.HasKey(e => e.ProductSubCategoryId)
                     .HasName("PRIMARY");

@@ -31,7 +31,7 @@ namespace acb_app.Models
         public DateTime? DiscontinuedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public virtual ProductSubCatetory ProductSubcategory { get; set; }
+        public virtual ProductSubCategory ProductSubcategory { get; set; }
         public virtual ProductInventory ProductInventory { get; set; }
         public virtual ProductListPriceHistory ProductListPriceHistory { get; set; }
         public virtual ProductProductPhoto ProductProductPhoto { get; set; }

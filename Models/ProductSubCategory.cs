@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace acb_app.Models
 {
-    public partial class ProductSubCatetory
+    public partial class ProductSubCategory
     {
-        public ProductSubCatetory()
+        public ProductSubCategory()
         {
             Product = new HashSet<Product>();
         }
