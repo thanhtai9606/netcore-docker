@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using acb_app.Models;
 using acb_app.Repositories.Services;
 using BecamexIDC.Common;
@@ -10,26 +9,25 @@ namespace acb_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")] // waring have to use this
-    //[Authorize] This is not working
-    public class PhoneController : ControllerBase
+   // [Authorize(AuthenticationSchemes = "Bearer")] // waring have to use this
+    public class EmployeeManagementController : ControllerBase
     {
-        private readonly IPhoneService _PhoneService;
+        private readonly IEmployeeService _employeeService;
         private readonly IUnitOfWorkAsync _unitOfWork;
         private OperationResult operationResult = new OperationResult();
-        public PhoneController(IPhoneService PhoneService, IUnitOfWorkAsync unitOfWork)
+        public EmployeeManagementController(IEmployeeService employeeService, IUnitOfWorkAsync unitOfWork)
         {
-            _PhoneService = PhoneService;
+            _employeeService = employeeService;
             _unitOfWork = unitOfWork;
           
         }
-        [HttpPost, Route("AddPhone")]
-        public async Task<IActionResult> AddPhone(Phone Phone)
+        [HttpPost, Route("AddEmployee")]
+        public IActionResult AddEmployee(Employee Employee)
         {
             try
             {
-                _PhoneService.Add(Phone);
-                int res =  await _unitOfWork.SaveChangesAsync();
+                _employeeService.Add(Employee);
+                int res = _unitOfWork.SaveChanges();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -46,13 +44,13 @@ namespace acb_app.Controllers
             }
             return Ok(operationResult);
         }
-        [HttpPost, Route("UpdatePhone")]
-        public async Task<IActionResult> UpdatePhone(Phone Phone)
+        [HttpPost, Route("UpdateEmployee")]
+        public IActionResult UpdateEmployee(Employee Employee)
         {
             try
             {
-                _PhoneService.Update(Phone);
-                int res =  await _unitOfWork.SaveChangesAsync();
+                _employeeService.Update(Employee);
+                int res = _unitOfWork.SaveChanges();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -70,13 +68,13 @@ namespace acb_app.Controllers
             return Ok(operationResult);
         }
         
-        [HttpDelete, Route("DeletePhone")]
-        public async Task<IActionResult> DeletePhone(int id)
+        [HttpDelete, Route("DeleteEmployee")]
+        public IActionResult DeleteEmployee(int id)
         {
             try
             {
-                _PhoneService.Delete(id);
-                int res =  await _unitOfWork.SaveChangesAsync();
+                _employeeService.Delete(id);
+                int res = _unitOfWork.SaveChanges();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -93,10 +91,10 @@ namespace acb_app.Controllers
             }
             return Ok(operationResult);
         }
-        [HttpGet, Route("GetPhone")]
-        public IActionResult GetPhone()
+        [HttpGet, Route("GetEmployee")]
+        public IActionResult GetEmployee()
         {
-            return Ok(_PhoneService.Queryable());
+            return Ok(_employeeService.Queryable());
         }
 
 

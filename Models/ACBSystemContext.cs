@@ -46,8 +46,7 @@ namespace acb_app.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=172.17.0.5;database=ACB-System;user=root;pwd=123");
+                    //not Config
             }
         }
 

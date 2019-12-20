@@ -12,24 +12,24 @@ namespace acb_app.Controllers
     [ApiController]
     [Authorize(AuthenticationSchemes = "Bearer")] // waring have to use this
     //[Authorize] This is not working
-    public class PhoneController : ControllerBase
+    public class AddressController : ControllerBase
     {
-        private readonly IPhoneService _PhoneService;
+        private readonly IAddressService _addressService;
         private readonly IUnitOfWorkAsync _unitOfWork;
         private OperationResult operationResult = new OperationResult();
-        public PhoneController(IPhoneService PhoneService, IUnitOfWorkAsync unitOfWork)
+        public AddressController(IAddressService AddressService, IUnitOfWorkAsync unitOfWork)
         {
-            _PhoneService = PhoneService;
+            _addressService = AddressService;
             _unitOfWork = unitOfWork;
           
         }
-        [HttpPost, Route("AddPhone")]
-        public async Task<IActionResult> AddPhone(Phone Phone)
+        [HttpPost, Route("AddAddress")]
+        public async Task<IActionResult> AddAddress(Address Address)
         {
             try
             {
-                _PhoneService.Add(Phone);
-                int res =  await _unitOfWork.SaveChangesAsync();
+                _addressService.Add(Address);
+                int res = await _unitOfWork.SaveChangesAsync();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -46,12 +46,12 @@ namespace acb_app.Controllers
             }
             return Ok(operationResult);
         }
-        [HttpPost, Route("UpdatePhone")]
-        public async Task<IActionResult> UpdatePhone(Phone Phone)
+        [HttpPost, Route("UpdateAddress")]
+        public async Task<IActionResult> UpdateAddress(Address Address)
         {
             try
             {
-                _PhoneService.Update(Phone);
+                _addressService.Update(Address);
                 int res =  await _unitOfWork.SaveChangesAsync();
                 if (res > 0)
                 {
@@ -70,13 +70,13 @@ namespace acb_app.Controllers
             return Ok(operationResult);
         }
         
-        [HttpDelete, Route("DeletePhone")]
-        public async Task<IActionResult> DeletePhone(int id)
+        [HttpDelete, Route("DeleteAddress")]
+        public async Task<IActionResult> DeleteAddress(int id)
         {
             try
             {
-                _PhoneService.Delete(id);
-                int res =  await _unitOfWork.SaveChangesAsync();
+                _addressService.Delete(id);
+               int res =  await _unitOfWork.SaveChangesAsync();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -93,10 +93,10 @@ namespace acb_app.Controllers
             }
             return Ok(operationResult);
         }
-        [HttpGet, Route("GetPhone")]
-        public IActionResult GetPhone()
+        [HttpGet, Route("GetAddress")]
+        public IActionResult GetAddress()
         {
-            return Ok(_PhoneService.Queryable());
+            return Ok(_addressService.Queryable());
         }
 
 
