@@ -14,5 +14,8 @@ namespace acb_app.Models
         public decimal UnitPriceDiscount { get; set; }
         public decimal LineTotal { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual SaleOrderHeader SalesOrder { get; set; }
+        public virtual SaleOrderHeader SaleOrderHeader { get; set; }
     }
 }

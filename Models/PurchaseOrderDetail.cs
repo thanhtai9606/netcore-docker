@@ -16,5 +16,8 @@ namespace acb_app.Models
         public int RejectedQty { get; set; }
         public int StockedQty { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual Product Product { get; set; }
+        public virtual PurchaseOrderHeader PurchaseOrder { get; set; }
     }
 }

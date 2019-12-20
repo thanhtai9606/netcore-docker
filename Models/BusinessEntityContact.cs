@@ -9,5 +9,7 @@ namespace acb_app.Models
         public int PersonId { get; set; }
         public int ContactTypeId { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual ContactType ContactType { get; set; }
     }
 }

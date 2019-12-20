@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace acb_app.Models
 {
@@ -19,5 +18,7 @@ namespace acb_app.Models
         public sbyte SickLeaveHours { get; set; }
         public bool CurrentFlag { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual BusinessEntity BusinessEntity { get; set; }
     }
 }

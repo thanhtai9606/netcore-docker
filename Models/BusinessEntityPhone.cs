@@ -9,5 +9,7 @@ namespace acb_app.Models
         public int PhoneId { get; set; }
         public int PhoneTypeId { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual Phone Phone { get; set; }
     }
 }

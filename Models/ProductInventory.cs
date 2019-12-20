@@ -11,5 +11,7 @@ namespace acb_app.Models
         public int? Bin { get; set; }
         public short Quantity { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual Product Product { get; set; }
     }
 }

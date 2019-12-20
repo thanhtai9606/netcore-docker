@@ -7,5 +7,9 @@ namespace acb_app.Models
     {
         public int BusinessEntityId { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual BusinessEntityAddress BusinessEntityAddress { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

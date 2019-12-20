@@ -9,6 +9,6 @@ namespace acb_app.Models
         public string WardName { get; set; }
         public string EnglishName { get; set; }
         public string Level { get; set; }
-        public int DistrictId { get; set; }
+        public string DistrictId { get; set; }
     }
 }

@@ -11,5 +11,7 @@ namespace acb_app.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual BusinessEntity BusinessEntity { get; set; }
     }
 }

@@ -5,6 +5,11 @@ namespace acb_app.Models
 {
     public partial class Product
     {
+        public Product()
+        {
+            PurchaseOrderDetail = new HashSet<PurchaseOrderDetail>();
+        }
+
         public int ProductId { get; set; }
         public string Name { get; set; }
         public string ProductNumber { get; set; }
@@ -25,5 +30,11 @@ namespace acb_app.Models
         public DateTime? SellEndDate { get; set; }
         public DateTime? DiscontinuedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual ProductSubCatetory ProductSubcategory { get; set; }
+        public virtual ProductInventory ProductInventory { get; set; }
+        public virtual ProductListPriceHistory ProductListPriceHistory { get; set; }
+        public virtual ProductProductPhoto ProductProductPhoto { get; set; }
+        public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetail { get; set; }
     }
 }
