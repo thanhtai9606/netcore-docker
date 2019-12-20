@@ -1,5 +1,5 @@
 using acb_app.Models;
-using acb_app.Repositories.Contract;
+using acb_app.Repositories.Services;
 using BecamexIDC.Common;
 using BecamexIDC.Pattern.EF.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
