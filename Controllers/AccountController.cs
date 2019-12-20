@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using Microsoft.Extensions.Options;
 
 namespace acb_app.Controllers
 {
@@ -19,12 +20,12 @@ namespace acb_app.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
-        private readonly IConfiguration _config;
-        public AccountController(UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager, IConfiguration config)
+        private readonly AppSettings _appSettings;
+        public AccountController(UserManager<IdentityUser> userManager,SignInManager<IdentityUser> signInManager, IOptions<AppSettings> appSettings)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            _config = config;
+            _appSettings = appSettings.Value;
         }
         [HttpPost,Route("Register")]
         public async Task<IActionResult> Register(RegisterAccount account)
@@ -37,11 +38,7 @@ namespace acb_app.Controllers
             }
             return Ok(result);
         }
-         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+     
 
         [HttpPost, Route("Login")]
         [AllowAnonymous]
@@ -54,9 +51,7 @@ namespace acb_app.Controllers
             {
                 //generate token
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var xx =_config.GetSection("AppSettings:Token").Value;
-                Console.WriteLine("key ", xx);
-                var key = Encoding.ASCII.GetBytes("dungudngudngdgdgsfds fdsf ");
+                var key = Encoding.ASCII.GetBytes(_appSettings.Token);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]{

@@ -9,7 +9,8 @@ namespace acb_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  //  [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")] // waring have to use this
+    //[Authorize] This is not working
     public class PhoneController : ControllerBase
     {
         private readonly IPhoneService _PhoneService;
