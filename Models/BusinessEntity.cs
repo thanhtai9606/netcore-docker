@@ -6,11 +6,7 @@ namespace acb_app.Models
     public partial class BusinessEntity
     {
         public int BusinessEntityId { get; set; }
-        public DateTime ModifiedDate { get; set; }
-
-        public virtual BusinessEntityContact BusinessEntity1 { get; set; }
-        public virtual BusinessEntityPhone BusinessEntity2 { get; set; }
-        public virtual Person BusinessEntity3 { get; set; }
+        public DateTime ModifiedDate { get; set; }    
         public virtual BusinessEntityAddress BusinessEntityNavigation { get; set; }
         public virtual BusinessEntityAddress BusinessEntityAddress { get; set; }
         public virtual BusinessEntityContact BusinessEntityContact { get; set; }

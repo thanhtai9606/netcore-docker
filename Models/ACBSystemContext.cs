@@ -117,23 +117,7 @@ namespace acb_app.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("BusinessEntity_ibfk_1");
 
-                entity.HasOne(d => d.BusinessEntity1)
-                    .WithOne(p => p.BusinessEntity)
-                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("BusinessEntity_ibfk_2");
-
-                entity.HasOne(d => d.BusinessEntity2)
-                    .WithOne(p => p.BusinessEntity)
-                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("BusinessEntity_ibfk_3");
-
-                entity.HasOne(d => d.BusinessEntity3)
-                    .WithOne(p => p.BusinessEntity)
-                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("BusinessEntity_ibfk_4");
+              
             });
 
             modelBuilder.Entity<BusinessEntityAddress>(entity =>
