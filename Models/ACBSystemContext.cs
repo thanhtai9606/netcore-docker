@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 namespace acb_app.Models
 {
     public partial class ACBSystemContext : DataContext
-    {
-         public ACBSystemContext(DbContextOptions<ACBSystemContext> options)
+    {    
+        public ACBSystemContext(DbContextOptions<ACBSystemContext> options)
             : base(options)
         {
         }
@@ -46,7 +46,7 @@ namespace acb_app.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=172.17.0.4;database=ACB-System;user=root;pwd=123");
+                optionsBuilder.UseMySql("server=172.17.0.5;database=ACB-System;user=root;pwd=123");
             }
         }
 
@@ -106,18 +106,9 @@ namespace acb_app.Models
             {
                 entity.Property(e => e.BusinessEntityId)
                     .HasColumnName("BusinessEntityID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedOnAdd();
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-
-                entity.HasOne(d => d.BusinessEntityNavigation)
-                    .WithOne(p => p.BusinessEntity)
-                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("BusinessEntity_ibfk_1");
-
-              
             });
 
             modelBuilder.Entity<BusinessEntityAddress>(entity =>
@@ -160,11 +151,11 @@ namespace acb_app.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("BusinessEntityAddress_ibfk_3");
 
-                entity.HasOne(d => d.BusinessEntityNavigation)
+                entity.HasOne(d => d.BusinessEntity)
                     .WithOne(p => p.BusinessEntityAddress)
                     .HasForeignKey<BusinessEntityAddress>(d => d.BusinessEntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("BusinessEntityAddress_ibfk_1");
+                    .HasConstraintName("BusinessEntityAddress_ibfk_4");
             });
 
             modelBuilder.Entity<BusinessEntityContact>(entity =>
@@ -189,13 +180,13 @@ namespace acb_app.Models
                     .HasColumnName("PersonID")
                     .HasColumnType("int(11)");
 
-                entity.HasOne(d => d.BusinessEntityNavigation)
+                entity.HasOne(d => d.BusinessEntity)
                     .WithOne(p => p.BusinessEntityContact)
                     .HasForeignKey<BusinessEntityContact>(d => d.BusinessEntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("BusinessEntityContact_ibfk_2");
+                    .HasConstraintName("BusinessEntityContact_ibfk_4");
 
-                entity.HasOne(d => d.BusinessEntity1)
+                entity.HasOne(d => d.BusinessEntityNavigation)
                     .WithOne(p => p.BusinessEntityContact)
                     .HasForeignKey<BusinessEntityContact>(d => d.BusinessEntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -233,7 +224,7 @@ namespace acb_app.Models
                     .HasColumnName("PhoneTypeID")
                     .HasColumnType("int(11)");
 
-                entity.HasOne(d => d.BusinessEntityNavigation)
+                entity.HasOne(d => d.BusinessEntity)
                     .WithOne(p => p.BusinessEntityPhone)
                     .HasForeignKey<BusinessEntityPhone>(d => d.BusinessEntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -414,7 +405,7 @@ namespace acb_app.Models
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_vietnamese_ci");
 
-                entity.HasOne(d => d.BusinessEntityNavigation)
+                entity.HasOne(d => d.BusinessEntity)
                     .WithOne(p => p.Person)
                     .HasForeignKey<Person>(d => d.BusinessEntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)

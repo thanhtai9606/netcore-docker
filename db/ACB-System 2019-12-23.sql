@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 172.17.0.5
--- Thời gian đã tạo: Th12 23, 2019 lúc 07:27 AM
+-- Thời gian đã tạo: Th12 23, 2019 lúc 07:55 AM
 -- Phiên bản máy phục vụ: 5.7.28
 -- Phiên bản PHP: 7.2.25
 
@@ -753,29 +753,20 @@ ALTER TABLE `AddressType`
   ADD CONSTRAINT `AddressType_ibfk_1` FOREIGN KEY (`AddressTypeID`) REFERENCES `BusinessEntityAddress` (`AddressTypeID`);
 
 --
--- Các ràng buộc cho bảng `BusinessEntity`
---
-ALTER TABLE `BusinessEntity`
-  ADD CONSTRAINT `BusinessEntity_ibfk_1` FOREIGN KEY (`BusinessEntityID`) REFERENCES `BusinessEntityAddress` (`BusinessEntityID`),
-  ADD CONSTRAINT `BusinessEntity_ibfk_2` FOREIGN KEY (`BusinessEntityID`) REFERENCES `BusinessEntityContact` (`BusinessEntityID`),
-  ADD CONSTRAINT `BusinessEntity_ibfk_3` FOREIGN KEY (`BusinessEntityID`) REFERENCES `BusinessEntityPhone` (`BusinessEntityID`),
-  ADD CONSTRAINT `BusinessEntity_ibfk_4` FOREIGN KEY (`BusinessEntityID`) REFERENCES `Person` (`BusinessEntityID`);
-
---
 -- Các ràng buộc cho bảng `BusinessEntityAddress`
 --
 ALTER TABLE `BusinessEntityAddress`
-  ADD CONSTRAINT `BusinessEntityAddress_ibfk_1` FOREIGN KEY (`BusinessEntityID`) REFERENCES `BusinessEntity` (`BusinessEntityID`),
   ADD CONSTRAINT `BusinessEntityAddress_ibfk_2` FOREIGN KEY (`AddressID`) REFERENCES `Address` (`AddressID`),
-  ADD CONSTRAINT `BusinessEntityAddress_ibfk_3` FOREIGN KEY (`AddressTypeID`) REFERENCES `AddressType` (`AddressTypeID`);
+  ADD CONSTRAINT `BusinessEntityAddress_ibfk_3` FOREIGN KEY (`AddressTypeID`) REFERENCES `AddressType` (`AddressTypeID`),
+  ADD CONSTRAINT `BusinessEntityAddress_ibfk_4` FOREIGN KEY (`BusinessEntityID`) REFERENCES `BusinessEntity` (`BusinessEntityID`);
 
 --
 -- Các ràng buộc cho bảng `BusinessEntityContact`
 --
 ALTER TABLE `BusinessEntityContact`
   ADD CONSTRAINT `BusinessEntityContact_ibfk_1` FOREIGN KEY (`ContactTypeID`) REFERENCES `ContactType` (`ContactTypeID`),
-  ADD CONSTRAINT `BusinessEntityContact_ibfk_2` FOREIGN KEY (`BusinessEntityID`) REFERENCES `BusinessEntity` (`BusinessEntityID`),
-  ADD CONSTRAINT `BusinessEntityContact_ibfk_3` FOREIGN KEY (`BusinessEntityID`) REFERENCES `Person` (`BusinessEntityID`);
+  ADD CONSTRAINT `BusinessEntityContact_ibfk_3` FOREIGN KEY (`BusinessEntityID`) REFERENCES `Person` (`BusinessEntityID`),
+  ADD CONSTRAINT `BusinessEntityContact_ibfk_4` FOREIGN KEY (`BusinessEntityID`) REFERENCES `BusinessEntity` (`BusinessEntityID`);
 
 --
 -- Các ràng buộc cho bảng `BusinessEntityPhone`

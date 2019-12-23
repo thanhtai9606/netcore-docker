@@ -13,6 +13,8 @@ namespace acbapp.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
+        
+        private readonly IBusinessEntityService businessEntityService;
         private readonly IPersonService personService;
         private readonly IBusinessEntityAddressService businessEntityAddressService;
         private readonly IBusinessEntityContactService businessEntityContactService;
@@ -32,8 +34,10 @@ namespace acbapp.Controllers
                                  IAddressTypeService addressTypeService,
                                  IPhoneTypeService phoneTypeService,
                                  IContactTypeService contactTypeService,
+                                 IBusinessEntityService businessEntityService,
                                  IUnitOfWorkAsync unitOfWork)
         {
+            this.businessEntityService = businessEntityService;
             this.employeeService = employeeService;
             this.unitOfWork = unitOfWork;
             this.addressService = addressService;
@@ -52,8 +56,9 @@ namespace acbapp.Controllers
         {
             try
             {
-                employeeService.Add(businessEntity.Employee);
-                personService.Add(businessEntity.Person);
+                businessEntityService.Add(businessEntity);
+                // employeeService.Add(businessEntity.Employee);
+                // personService.Add(businessEntity.Person);
                 
                 // businessEntityAddressService.AddRange(businessEntity.BusinessEntityAddresses);
                 // businessEntityContactService.AddRange(businessEntity.BusinessEntityContacts);

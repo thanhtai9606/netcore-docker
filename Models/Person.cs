@@ -12,7 +12,6 @@ namespace acb_app.Models
         public string LastName { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public virtual BusinessEntity BusinessEntityNavigation { get; set; }
         public virtual BusinessEntity BusinessEntity { get; set; }
         public virtual BusinessEntityContact BusinessEntityContact { get; set; }
     }
