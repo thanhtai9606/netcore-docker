@@ -16,6 +16,5 @@ namespace acb_app.Models
         public DateTime ModifiedDate { get; set; }
 
         public virtual SaleOrderHeader SalesOrder { get; set; }
-        public virtual SaleOrderHeader SaleOrderHeader { get; set; }
     }
 }
