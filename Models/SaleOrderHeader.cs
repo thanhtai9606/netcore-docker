@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace acb_app.Models
 {
@@ -21,6 +22,7 @@ namespace acb_app.Models
         public decimal Freight { get; set; }
         public decimal TotalDue { get; set; }
         public DateTime ModifiedDate { get; set; }
+        [NotMapped]
         public virtual SalesOrderDetail SalesOrderDetail { get; set; }
     }
 }

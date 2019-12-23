@@ -50,6 +50,8 @@ namespace acb_app.Models
             }
         }
 
+#region Define Foregin Key
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Address>(entity =>
@@ -1035,6 +1037,7 @@ namespace acb_app.Models
             OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+#endregion
+     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

@@ -45,8 +45,64 @@ namespace acb_app
             services.Configure<AppIdentitySettings>(identitySettingSection);
             services.Configure<AppSettings>(appSettingsSection);
             services.AddScoped<IUnitOfWorkAsync, UnitOfWork>();
+        #region  Repository Generic
+            
+            services.AddScoped<IRepositoryAsync<Address>, Repository<Address>>();    
+            services.AddScoped<IRepositoryAsync<AddressType>, Repository<AddressType>>();
+            services.AddScoped<IRepositoryAsync<BusinessEntity>, Repository<BusinessEntity>>();  
+            services.AddScoped<IRepositoryAsync<BusinessEntityAddress>, Repository<BusinessEntityAddress>>();                 
+            services.AddScoped<IRepositoryAsync<BusinessEntityContact>, Repository<BusinessEntityContact>>();   
+            services.AddScoped<IRepositoryAsync<BusinessEntityPhone>, Repository<BusinessEntityPhone>>();   
+            services.AddScoped<IRepositoryAsync<ContactType>, Repository<ContactType>>();
+            services.AddScoped<IRepositoryAsync<District>, Repository<District>>();            
+            services.AddScoped<IRepositoryAsync<Employee>, Repository<Employee>>();
+            services.AddScoped<IRepositoryAsync<Person>, Repository<Person>>();
             services.AddScoped<IRepositoryAsync<Phone>, Repository<Phone>>();
+            services.AddScoped<IRepositoryAsync<PhoneType>, Repository<PhoneType>>();
+            services.AddScoped<IRepositoryAsync<Product>, Repository<Product>>();
+            services.AddScoped<IRepositoryAsync<ProductCategory>, Repository<ProductCategory>>();
+            services.AddScoped<IRepositoryAsync<ProductInventory>, Repository<ProductInventory>>();
+            services.AddScoped<IRepositoryAsync<ProductListPriceHistory>, Repository<ProductListPriceHistory>>();
+            services.AddScoped<IRepositoryAsync<ProductPhoto>, Repository<ProductPhoto>>();
+            services.AddScoped<IRepositoryAsync<ProductProductPhoto>, Repository<ProductProductPhoto>>();
+            services.AddScoped<IRepositoryAsync<ProductSubCategory>, Repository<ProductSubCategory>>();
+            services.AddScoped<IRepositoryAsync<Province>, Repository<Province>>();
+            services.AddScoped<IRepositoryAsync<PurchaseOrderHeader>, Repository<PurchaseOrderHeader>>();
+            services.AddScoped<IRepositoryAsync<PurchaseOrderDetail>, Repository<PurchaseOrderDetail>>();
+            services.AddScoped<IRepositoryAsync<SalesOrderDetail>, Repository<SalesOrderDetail>>();
+            services.AddScoped<IRepositoryAsync<SaleOrderHeader>, Repository<SaleOrderHeader>>();
+            services.AddScoped<IRepositoryAsync<TransactionHistory>, Repository<TransactionHistory>>();
+            services.AddScoped<IRepositoryAsync<UnitMeasure>, Repository<UnitMeasure>>();
+            services.AddScoped<IRepositoryAsync<Vendor>, Repository<Vendor>>();
+            services.AddScoped<IRepositoryAsync<Ward>, Repository<Ward>>();
+        #endregion
+            services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IAddressTypeService, AddressTypeService>();            
+            services.AddScoped<IBusinessEntityService, BusinessEntityService>();
+            services.AddScoped<IBusinessEntityAddressService, BusinessEntityAddressService>();
+            services.AddScoped<IBusinessEntityContactService, BusinessEntityContactService>();
+            services.AddScoped<IBusinessEntityPhoneService, BusinessEntityPhoneService>();
+            services.AddScoped<IContactTypeService, ContactTypeService>();
+            services.AddScoped<IDistrictService, DistrictService>();            
+            services.AddScoped<IEmployeeService, EmployeeService>();            
+            services.AddScoped<IPersonService, PersonService>();            
             services.AddScoped<IPhoneService, PhoneService>();
+            services.AddScoped<IPhoneTypeService, PhoneTypeService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IProductInventoryService, ProductInventoryService>();
+            services.AddScoped<IProductListPriceHistoryService, ProductListPriceHistoryService>();
+            services.AddScoped<IProductPhotoService, ProductPhotoService>();
+            services.AddScoped<IProductSubCategoryService, ProductSubCategoryService>();
+            services.AddScoped<IProvinceService, ProvinceService>();
+            services.AddScoped<IPurchaseOrderHeaderService, PurchaseOrderHeaderService>();
+            services.AddScoped<IPurchaseOrderDetailService, PurchaseOrderDetailService>();
+            services.AddScoped<ISaleOrderHeaderService, SaleOrderHeaderService>();
+            services.AddScoped<ISaleOrderDetailService, SaleOrderDetailService>();
+            services.AddScoped<ITransactionHistoryService, TransactionHistoryService>();
+            services.AddScoped<IUnitMeasureService, UnitMeasureService>();
+            services.AddScoped<IVendorService, VendorService>();
+            services.AddScoped<IWardService, WardService>();
 
             var identitySettings = identitySettingSection.Get<AppIdentitySettings>();
 

@@ -5,6 +5,7 @@ namespace acb_app.Models
 {
     public partial class BusinessEntityPhone
     {
+        
         public int BusinessEntityId { get; set; }
         public int PhoneId { get; set; }
         public int PhoneTypeId { get; set; }

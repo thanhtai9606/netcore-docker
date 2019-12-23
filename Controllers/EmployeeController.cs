@@ -5,29 +5,57 @@ using BecamexIDC.Pattern.EF.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace acb_app.Controllers
+namespace acbapp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
    // [Authorize(AuthenticationSchemes = "Bearer")] // waring have to use this
     public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
-        private readonly IUnitOfWorkAsync _unitOfWork;
+        private readonly IEmployeeService employeeService;
+        private readonly IPersonService personService;
+        private readonly IBusinessEntityAddressService businessEntityAddressService;
+        private readonly IBusinessEntityContactService businessEntityContactService;
+        private readonly IPhoneService phoneService;
+        private readonly IAddressService addressService;
+        private readonly IAddressTypeService addressTypeService;
+        private readonly IPhoneTypeService phoneTypeService;
+        private readonly IUnitOfWorkAsync unitOfWork;
         private OperationResult operationResult = new OperationResult();
-        public EmployeeController(IEmployeeService employeeService, IUnitOfWorkAsync unitOfWork)
+        public EmployeeController(IEmployeeService employeeService, 
+                                 IPersonService personService,
+                                 IBusinessEntityAddressService businessEntityAddressService,
+                                 IBusinessEntityContactService businessEntityContactService,
+                                 IPhoneService phoneService,
+                                 IAddressService addressService,
+                                 IAddressTypeService addressTypeService,
+                                 IPhoneTypeService phoneTypeService,
+                                 IUnitOfWorkAsync unitOfWork)
         {
-            _employeeService = employeeService;
-            _unitOfWork = unitOfWork;
+            this.employeeService = employeeService;
+            this.unitOfWork = unitOfWork;
+            this.addressService = addressService;
+            this.personService = personService;
+            this.businessEntityContactService = businessEntityContactService;
+            this.businessEntityAddressService = businessEntityAddressService;
+            this.personService = personService;
+            this.phoneService = phoneService;
+            this.addressTypeService= addressTypeService;
+            this.phoneTypeService = phoneTypeService;
           
         }
         [HttpPost, Route("AddEmployee")]
-        public IActionResult AddEmployee(Employee Employee)
+        public IActionResult AddEmployee(BusinessEntity businessEntity)
         {
             try
             {
-                _employeeService.Add(Employee);
-                int res = _unitOfWork.SaveChanges();
+                employeeService.Add(businessEntity.Employee);
+                personService.Add(businessEntity.Person);
+                
+                // businessEntityAddressService.AddRange(businessEntity.BusinessEntityAddresses);
+                // businessEntityContactService.AddRange(businessEntity.BusinessEntityContacts);
+
+                int res = unitOfWork.SaveChanges();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -49,8 +77,8 @@ namespace acb_app.Controllers
         {
             try
             {
-                _employeeService.Update(Employee);
-                int res = _unitOfWork.SaveChanges();
+                employeeService.Update(Employee);
+                int res = unitOfWork.SaveChanges();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -73,8 +101,8 @@ namespace acb_app.Controllers
         {
             try
             {
-                _employeeService.Delete(id);
-                int res = _unitOfWork.SaveChanges();
+                employeeService.Delete(id);
+                int res = unitOfWork.SaveChanges();
                 if (res > 0)
                 {
                     operationResult.Success = true;
@@ -94,7 +122,7 @@ namespace acb_app.Controllers
         [HttpGet, Route("GetEmployee")]
         public IActionResult GetEmployee()
         {
-            return Ok(_employeeService.Queryable());
+            return Ok(employeeService.Queryable());
         }
 
 
