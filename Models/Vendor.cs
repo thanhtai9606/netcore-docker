@@ -11,5 +11,7 @@ namespace acb_app.Models
         public int ActiveFlag { get; set; }
         public int PreferredVendorStatus { get; set; }
         public DateTime ModifiedDate { get; set; }
+
+        public virtual BusinessEntity BusinessEntity { get; set; }
     }
 }

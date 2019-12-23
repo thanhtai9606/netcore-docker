@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace acb_app.Models
 {
@@ -13,9 +12,8 @@ namespace acb_app.Models
         public string LastName { get; set; }
         public DateTime ModifiedDate { get; set; }
 
+        public virtual BusinessEntity BusinessEntityNavigation { get; set; }
         public virtual BusinessEntity BusinessEntity { get; set; }
-
-        [NotMapped]
-        public virtual ICollection<BusinessEntityContact> BusinessEntityContacts { get; set; }
+        public virtual BusinessEntityContact BusinessEntityContact { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace acbapp.Controllers
         private readonly IPhoneService phoneService;
         private readonly IAddressService addressService;
         private readonly IAddressTypeService addressTypeService;
+        private readonly IContactTypeService contactTypeService;
         private readonly IPhoneTypeService phoneTypeService;
         private readonly IUnitOfWorkAsync unitOfWork;
         private OperationResult operationResult = new OperationResult();
@@ -30,6 +31,7 @@ namespace acbapp.Controllers
                                  IAddressService addressService,
                                  IAddressTypeService addressTypeService,
                                  IPhoneTypeService phoneTypeService,
+                                 IContactTypeService contactTypeService,
                                  IUnitOfWorkAsync unitOfWork)
         {
             this.employeeService = employeeService;
@@ -42,6 +44,7 @@ namespace acbapp.Controllers
             this.phoneService = phoneService;
             this.addressTypeService= addressTypeService;
             this.phoneTypeService = phoneTypeService;
+            this.contactTypeService = contactTypeService;
           
         }
         [HttpPost, Route("AddEmployee")]

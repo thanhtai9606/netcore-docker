@@ -7,8 +7,7 @@ namespace acb_app.Models
 {
     public partial class ACBSystemContext : DataContext
     {
-     
-        public ACBSystemContext(DbContextOptions<ACBSystemContext> options)
+         public ACBSystemContext(DbContextOptions<ACBSystemContext> options)
             : base(options)
         {
         }
@@ -46,11 +45,10 @@ namespace acb_app.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                    //not Config
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseMySql("server=172.17.0.4;database=ACB-System;user=root;pwd=123");
             }
         }
-
-#region Define Foregin Key
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -108,15 +106,46 @@ namespace acb_app.Models
             {
                 entity.Property(e => e.BusinessEntityId)
                     .HasColumnName("BusinessEntityID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+                entity.HasOne(d => d.BusinessEntityNavigation)
+                    .WithOne(p => p.BusinessEntity)
+                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntity_ibfk_1");
+
+                entity.HasOne(d => d.BusinessEntity1)
+                    .WithOne(p => p.BusinessEntity)
+                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntity_ibfk_2");
+
+                entity.HasOne(d => d.BusinessEntity2)
+                    .WithOne(p => p.BusinessEntity)
+                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntity_ibfk_3");
+
+                entity.HasOne(d => d.BusinessEntity3)
+                    .WithOne(p => p.BusinessEntity)
+                    .HasForeignKey<BusinessEntity>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntity_ibfk_4");
             });
 
             modelBuilder.Entity<BusinessEntityAddress>(entity =>
             {
                 entity.HasKey(e => e.BusinessEntityId)
                     .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.AddressId)
+                    .HasName("AddressID");
+
+                entity.HasIndex(e => e.AddressTypeId)
+                    .HasName("AddressTypeID");
 
                 entity.Property(e => e.BusinessEntityId)
                     .HasColumnName("BusinessEntityID")
@@ -135,7 +164,19 @@ namespace acb_app.Models
                     .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAddOrUpdate();
 
-                entity.HasOne(d => d.BusinessEntity)
+                entity.HasOne(d => d.Address)
+                    .WithMany(p => p.BusinessEntityAddress)
+                    .HasForeignKey(d => d.AddressId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntityAddress_ibfk_2");
+
+                entity.HasOne(d => d.AddressType)
+                    .WithMany(p => p.BusinessEntityAddress)
+                    .HasForeignKey(d => d.AddressTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntityAddress_ibfk_3");
+
+                entity.HasOne(d => d.BusinessEntityNavigation)
                     .WithOne(p => p.BusinessEntityAddress)
                     .HasForeignKey<BusinessEntityAddress>(d => d.BusinessEntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -163,6 +204,18 @@ namespace acb_app.Models
                 entity.Property(e => e.PersonId)
                     .HasColumnName("PersonID")
                     .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.BusinessEntityNavigation)
+                    .WithOne(p => p.BusinessEntityContact)
+                    .HasForeignKey<BusinessEntityContact>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntityContact_ibfk_2");
+
+                entity.HasOne(d => d.BusinessEntity1)
+                    .WithOne(p => p.BusinessEntityContact)
+                    .HasForeignKey<BusinessEntityContact>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntityContact_ibfk_3");
 
                 entity.HasOne(d => d.ContactType)
                     .WithMany(p => p.BusinessEntityContact)
@@ -195,6 +248,12 @@ namespace acb_app.Models
                 entity.Property(e => e.PhoneTypeId)
                     .HasColumnName("PhoneTypeID")
                     .HasColumnType("int(11)");
+
+                entity.HasOne(d => d.BusinessEntityNavigation)
+                    .WithOne(p => p.BusinessEntityPhone)
+                    .HasForeignKey<BusinessEntityPhone>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("BusinessEntityPhone_ibfk_2");
 
                 entity.HasOne(d => d.Phone)
                     .WithMany(p => p.BusinessEntityPhone)
@@ -371,7 +430,7 @@ namespace acb_app.Models
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_vietnamese_ci");
 
-                entity.HasOne(d => d.BusinessEntity)
+                entity.HasOne(d => d.BusinessEntityNavigation)
                     .WithOne(p => p.Person)
                     .HasForeignKey<Person>(d => d.BusinessEntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -638,9 +697,6 @@ namespace acb_app.Models
 
             modelBuilder.Entity<ProductSubCategory>(entity =>
             {
-                entity.HasKey(e => e.ProductSubCategoryId)
-                    .HasName("PRIMARY");
-
                 entity.HasIndex(e => e.ProductCategoryId)
                     .HasName("ProductCategoryID");
 
@@ -663,10 +719,10 @@ namespace acb_app.Models
                     .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.ProductCategory)
-                    .WithMany(p => p.ProductSubCatetory)
+                    .WithMany(p => p.ProductSubCategory)
                     .HasForeignKey(d => d.ProductCategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ProductSubCatetory_ibfk_1");
+                    .HasConstraintName("ProductSubCategory_ibfk_1");
             });
 
             modelBuilder.Entity<Province>(entity =>
@@ -860,11 +916,11 @@ namespace acb_app.Models
 
                 entity.Property(e => e.TotalDue).HasColumnType("decimal(10,0)");
 
-                // entity.HasOne(d => d.SalesOrder)
-                //     .WithOne(p => p.SaleOrderHeader)
-                //     .HasForeignKey<SaleOrderHeader>(d => d.SalesOrderId)
-                //     .OnDelete(DeleteBehavior.ClientSetNull)
-                //     .HasConstraintName("SaleOrderHeader_ibfk_1");
+                entity.HasOne(d => d.SalesOrder)
+                    .WithOne(p => p.SaleOrderHeader)
+                    .HasForeignKey<SaleOrderHeader>(d => d.SalesOrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("SaleOrderHeader_ibfk_1");
             });
 
             modelBuilder.Entity<SalesOrderDetail>(entity =>
@@ -995,6 +1051,12 @@ namespace acb_app.Models
                 entity.Property(e => e.PreferredVendorStatus)
                     .HasColumnType("int(11)")
                     .HasComment("0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.");
+
+                entity.HasOne(d => d.BusinessEntity)
+                    .WithOne(p => p.Vendor)
+                    .HasForeignKey<Vendor>(d => d.BusinessEntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Vendor_ibfk_1");
             });
 
             modelBuilder.Entity<Ward>(entity =>
@@ -1037,7 +1099,6 @@ namespace acb_app.Models
             OnModelCreatingPartial(modelBuilder);
         }
 
-#endregion
-     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

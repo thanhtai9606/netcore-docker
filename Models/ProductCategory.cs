@@ -7,13 +7,13 @@ namespace acb_app.Models
     {
         public ProductCategory()
         {
-            ProductSubCatetory = new HashSet<ProductSubCategory>();
+            ProductSubCategory = new HashSet<ProductSubCategory>();
         }
 
         public int ProductCategoryId { get; set; }
         public string Name { get; set; }
         public DateTime ModifiedDate { get; set; }
 
-        public virtual ICollection<ProductSubCategory> ProductSubCatetory { get; set; }
+        public virtual ICollection<ProductSubCategory> ProductSubCategory { get; set; }
     }
 }
